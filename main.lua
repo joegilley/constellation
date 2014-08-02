@@ -4,13 +4,15 @@ print ("Scale factor: ", display.pixelWidth / display.actualContentWidth )
 -- end debug logging
 
 -- set up
-local Star = require("star")
-local Ship = require("ship")
+-- Physics needs to be set up and started before any other require's in order to ensure physics is available to all modules
 local physics = require("physics")
+physics.start()
+physics.setGravity( 0, 0 )
+
 local widget = require("widget")
+local Star = require("star")
 
 display.setStatusBar( display.HiddenStatusBar )
-physics.start()
 
 local initGUI, initStars, toggleDebug, start, processTap, tapCollision
 
@@ -60,7 +62,7 @@ function processTap(event)
     if event.phase == "ended" then
         local soi = display.newCircle(event.x, event.y, 30)
         timer.performWithDelay( 200, function () soi:removeSelf() end )
-        physics.addBody( soi, "static", { isSensor = true } )
+        physics.addBody( soi, "dynamic")
         soi:addEventListener( "collision", tapCollision )
     end
 end
