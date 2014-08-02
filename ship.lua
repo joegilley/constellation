@@ -1,21 +1,41 @@
-local ship = display.newImage( "sprites/drone.png" )
-ship.x = math.random( display.contentWidth )
-ship.y = -ship.contentHeight
-ship.targetRotation = 135
+local proxy = require "proxy"
 
---listener function for enterFrame event
-local function onEveryFrame( event )
-   ship:translate( 0, 1 )    -- move ship 1pt down on every frame
+-- declare my ship object
+local ship = proxy.get ( display.newImage( "sprites/drone.png" ) )
 
-   -- move ship above top of screen when it goes below the screen
-   if ship.y > display.contentHeight then
-      ship.y = -ship.contentHeight
-   end
+-- function init ship
+function ship:init() 
 
-	local turnSpeed = 0.05
-	ship.rotation = ship.rotation + turnSpeed * (ship.targetRotation - ship.rotation)
-	print(ship.rotation)
+	print( 'ship init' )
+
+	-- self = proxy.get( display.newImage( "sprites/drone.png" ) )
+	self.x = math.random( display.contentWidth )
+	self.y = self.contentHeight
+	self.targetRotation = 300
+
+	Runtime:addEventListener( "enterFrame", ship )
+
 end
 
+
+--listener function for enterFrame event
+
+function ship:enterFrame( event )
+
+   self:translate( 0, 1 )    -- move ship 1pt down on every frame
+
+   -- move ship above top of screen when it goes below the screen
+	if self.y > display.contentHeight then
+		self.y = -self.contentHeight
+	end
+
+	local turnSpeed = 0.001
+	self.rotation = self.rotation + turnSpeed * (self.targetRotation - self.rotation)
+	print(self.rotation)
+end
+
+
 -- assign the above function as an "enterFrame" listener
-Runtime:addEventListener( "enterFrame", onEveryFrame )
+	-- Runtime:addEventListener( "enterFrame", ship )
+
+return ship

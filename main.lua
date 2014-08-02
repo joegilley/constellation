@@ -12,6 +12,10 @@ physics.setGravity( 0, 0 )
 local widget = require("widget")
 local Star = require("star")
 
+-- my ship pooper
+local ship = require("ship")
+
+
 display.setStatusBar( display.HiddenStatusBar )
 
 local initGUI, initStars, toggleDebug, start, processTap, tapCollision
@@ -56,6 +60,8 @@ end
 function start() 
     initStars()
     initGUI()
+    ship:init()
+    Runtime:addEventListener( "enterFrame", ship )
 end
 
 function processTap(event)
