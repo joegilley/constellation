@@ -1,0 +1,48 @@
+settings = 
+{
+    excludeFiles =
+    {
+        all = 
+        {
+            "*.xcf",
+        },
+    },
+    iphone =
+    {
+        plist = 
+        {
+            -- Hides the status bar upon startup of the app
+            UIStatusBarHidden = true,
+            -- Custom fonts to include
+            UIAppFonts =
+            {
+                "erbos_black.ttf",
+                "erbos.ttf"
+            }
+        },
+    },
+    android =
+    {
+        -- Corresponds to version x.x.x
+        versionCode = "100",
+        usesPermissions =
+        {
+            "android.permission.INTERNET",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            -- Allows access to GPS
+            -- "android.permission.ACCESS_FINE_LOCATION",
+            -- Allows getting the location from WiFi/CellularService
+            -- "android.permission.ACCESS_COARSE_LOCATION",
+        },
+    }, 
+    orientation = 
+    {
+        default = "landscapeRight",
+        content = "", 
+        supported = 
+        {
+            "landscapeRight",
+            "landscapeLeft",
+        },
+    },
+}
