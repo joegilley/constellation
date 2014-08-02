@@ -5,6 +5,7 @@ print ("Scale factor: ", display.pixelWidth / display.actualContentWidth )
 
 -- set up
 local Star = require("star")
+local Ship = require("ship")
 local physics = require("physics")
 local widget = require("widget")
 
