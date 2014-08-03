@@ -1,7 +1,6 @@
 local Proxy = require('proxy')
 local json = require('json')
 
-
 local StarModule = {}
 
 local STAR_STANDARD_SIZE = 5
@@ -17,27 +16,27 @@ StarModule.STAR_DISPLAY_GROUP = STAR_GROUP
 local starCounter = 1
 
 -- public methods
-function StarModule.new ( vals )
-    local star = Proxy.get(display.newRect(STAR_GROUP, vals.x or -10, vals.y or -10, vals.size or STAR_STANDARD_SIZE, vals.size or STAR_STANDARD_SIZE))
-    star.color = vals.color or {1, 1, 1}
-    star.name = vals.name or "Star-" .. starCounter
-    if not vals.name then starCounter = starCounter + 1 end
+function StarModule.new ( )
+    local star = Proxy.get(display.newRect(STAR_GROUP, -10, -10, STAR_STANDARD_SIZE, STAR_STANDARD_SIZE))
+    star.color = {1, 1, 1}
+    star.name = "Star-" .. starCounter
+    starCounter = starCounter + 1
     
     local getStarColor, randomFlickerTimer
 
     function star:init( vals )
         vals = vals or {}
-        self.x = vals.x or math.random(0, display.contentWidth)
-        self.y = vals.y or math.random(0, display.contentHeight)
 
-        self.width = vals.width or (self.width + math.random(0, 3))
-        self.height = self.width
+        self.name = vals.name or self.name
+        self.x = vals.x or self.x
+        self.y = vals.y or self.y
 
-        -- TODO vals.color needs to be shallow copied or it could reference multiple tables
-        -- self.fill = vals.paint or getStarColor(self.fill, 2, 0.5)
+        self.width = vals.width or vals.size or self.width
+        self.height = vals.height or vals.size or self.height
+
+        self.color = vals.color or getStarColor(self.color, 2, 1.0, 0.7)
 
         randomFlickerTimer(self)
-        self.color = getStarColor(self.color, 2, 1.0, 0.7)
         self:setFillColor( self.color[1],  self.color[2], self.color[3] )
         physics.addBody( self, "static", { isSensor = true, filter = { categoryBits = STAR_CATEGORY_BIT, maskBits = STAR_COLLIDE_BITS } } )
         self:addEventListener( "enterFrame", self )
