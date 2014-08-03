@@ -61,7 +61,10 @@ function start()
     initStars()
     initGUI()
     ship:init()
-    Runtime:addEventListener( "enterFrame", ship )
+
+    local scale = math.random()
+    ship:setScale( scale )
+    Star.setScale( scale )
 end
 
 function processTap(event)
