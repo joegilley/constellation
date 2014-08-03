@@ -84,7 +84,7 @@ function hilite:highlight(star, referenceX, referenceY)
 
         hlGroup.isFixedRotation = true
 
-        timer.performWithDelay( 5000, function() self:reset(star) end)
+        hlInfo.resetTimer = timer.performWithDelay( 5000, function() self:reset(star) end)
     end
 
     timer.performWithDelay(math.random(0, 100), function() doHighlight() end)
