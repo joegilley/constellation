@@ -1,8 +1,10 @@
 local json = require("json")
+local utility = require("utility")
 
 local hilite = {}
 
 local MAX_HIT_DISTANCE = 30
+local HILITE_TIME = 250
 
 function hilite:init(expansion)
     self.expansion = expansion or 75
@@ -12,6 +14,8 @@ end
 
 hilite.exploding = {}
 function hilite:highlight(object, referenceX, referenceY)
+    if utility.inSet(object, self.exploding) then return end
+    
     local explodeInfo = {
         obj = object,
         origX = object.x,
@@ -29,7 +33,7 @@ function hilite:highlight(object, referenceX, referenceY)
     local deltaY = opposite + self.expansion * math.sin( angle ) --* hypotScale
 
     local config = {
-        time = 500, 
+        time = HILITE_TIME, 
         adjacent = adjacent, 
         opposite = opposite, 
         x=deltaX + object.x, 
@@ -42,6 +46,7 @@ function hilite:highlight(object, referenceX, referenceY)
         origYScale = object.yScale,
         referenceX = referenceX, 
         referenceY = referenceY,
+        transition = easing.outBack
     }
     print(json.encode(config, {indent = true}))
 
@@ -49,11 +54,12 @@ function hilite:highlight(object, referenceX, referenceY)
 
     timer.performWithDelay( 2000, function() 
             transition.moveTo( object, {
-                time=500, 
+                time=HILITE_TIME, 
                 x = config.origX, 
                 y = config.origY, 
                 xScale = config.origXScale, 
-                yScale = config.origYScale} )
+                yScale = config.origYScale,
+                transition = easing.inBack} )
         end
     )
 
