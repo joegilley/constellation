@@ -4,12 +4,13 @@ local json = require('json')
 
 local StarModule = {}
 
+local STAR_STANDARD_SIZE = 2
 
 local starDisplayGroup = display.newGroup()
 
 -- public methods
 function StarModule.new ( vals )
-    local star = Proxy.get(display.newRect(starDisplayGroup, vals.x or -10, vals.y or -10, vals.size or 1, vals.size or 1))
+    local star = Proxy.get(display.newRect(starDisplayGroup, vals.x or -10, vals.y or -10, vals.size or STAR_STANDARD_SIZE, vals.size or STAR_STANDARD_SIZE))
     star.color = vals.color or {1, 1, 1}
     
     local setupShiftColor, randomFlickerTimer
@@ -26,7 +27,10 @@ function StarModule.new ( vals )
         -- self.fill = vals.paint or setupShiftColor(self.fill, 2, 0.5)
 
         randomFlickerTimer(self)
+        self.color = setupShiftColor(self.color, 2, 1.0, 0.7)
+        self:setFillColor( self.color[1],  self.color[2], self.color[3] )
         physics.addBody( self, "static", { isSensor = true } )
+        self:addEventListener( "enterFrame", self )
     end
 
     function star:flicker(intensity, duration)
@@ -61,14 +65,14 @@ function StarModule.new ( vals )
             local shift = math.random() * math.min( 1, math.max( 0, math.random() * shiftIntensity ) )
 
             -- Green gets shifted anyway
-            color.g = color.g - shift
+            color[2] = color[2] - shift
 
             -- Choose whether red or blue shift
             local doRedShift = math.random() > 0.5 and true or false
             if doRedShift then
-                color.b = color.b - shift
+                color[3] = color[3] - shift
             else
-                color.r = color.r - shift
+                color[1] = color[1] - shift
             end
         end
         return color

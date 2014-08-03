@@ -8,9 +8,11 @@ print ("Scale factor: ", display.pixelWidth / display.actualContentWidth )
 local physics = require("physics")
 physics.start()
 physics.setGravity( 0, 0 )
-
+local json = require("json")
 local widget = require("widget")
+
 local Star = require("star")
+local hilite = require("hilite")
 
 display.setStatusBar( display.HiddenStatusBar )
 
@@ -18,10 +20,11 @@ local initGUI, initStars, toggleDebug, start, processTap, tapCollision
 
 local stars = {}
 
+local NUM_STARS = 400
+
 function initStars()
     local starGroup = display.newGroup( )
-    local numStars = math.random(100, 500)
-    for i=1, numStars do
+    for i=1, NUM_STARS do
         stars[i] = Star:new()
         stars[i]:init()
     end
@@ -56,19 +59,24 @@ end
 function start() 
     initStars()
     initGUI()
+    hilite:init()
+    -- Runtime:addEventListener("enterFrame", stars[1])
 end
 
 function processTap(event)
     if event.phase == "ended" then
+        print("Tapped: ", event.x, ", ", event.y)
         local soi = display.newCircle(event.x, event.y, 30)
-        timer.performWithDelay( 200, function () soi:removeSelf() end )
+        timer.performWithDelay( 50, function () soi:removeSelf() end )
         physics.addBody( soi, "dynamic")
         soi:addEventListener( "collision", tapCollision )
     end
 end
 
 function tapCollision(collision) 
-    print( collision.phase )
+    -- print("Collision from: ", collision.target.x, collision.target.y)
+    -- print("Collision with: ", collision.other.x, collision.other.y)
+    hilite:highlight(collision.other, collision.target.x, collision.target.y)
 end
 
 local isDebug = false
