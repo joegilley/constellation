@@ -63,13 +63,16 @@ end
 function start() 
     initStars()
     initGUI()
-    hilite:init()
- 
+<<<<<<< HEAD
     ship:init()
 
     local scale = math.random()
     ship:setScale( scale )
     -- Star.setScale( scale )
+=======
+    hilite:init()
+    -- Runtime:addEventListener("enterFrame", stars[1])
+>>>>>>> c1fba63343aa2f2e4c76a486041b5cd225456efd
 end
 
 function processTap(event)

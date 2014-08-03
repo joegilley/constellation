@@ -4,8 +4,6 @@ local physics = require "physics"
 -- declare my ship object
 local ship = proxy.get ( display.newContainer( 300, 300 ) )
 
-
-
 -- function init ship
 function ship:init() 
 	print( 'ship init' )
@@ -30,6 +28,7 @@ function ship:init()
     for y, row in pairs(design) do
 	    for x, col in pairs(row) do
 
+	    	-- create an index for the tiles table
 	    	index = ( x * limits ) + y
 
 	    	if col == 1 then
@@ -44,7 +43,7 @@ function ship:init()
 				part_tiles[index] = display.newImage( "sprites/parts/marker.png" )
 	    	end
 
-	    	if part_tiles[index] ~= nil then
+	    	if part_tiles[index] then
 				part_tiles[index].x = origin_x + ( ( x - 1 ) * part_scale ) + ( part_tiles[index].width / 2 )
     			part_tiles[index].y = origin_y + ( ( y - 1 ) * part_scale ) + ( part_tiles[index].height / 2 )
     			self:insert( part_tiles[index], false )
