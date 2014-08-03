@@ -57,8 +57,8 @@ function hilite:highlight(object, referenceX, referenceY)
                 time=HILITE_TIME, 
                 x = config.origX, 
                 y = config.origY, 
-                xScale = config.origXScale, 
-                yScale = config.origYScale,
+                xScale = 1, 
+                yScale = 1,
                 transition = easing.inBack} )
         end
     )
