@@ -41,19 +41,19 @@ function initGUI()
         left = 20,
         label = "D",
         labelAlign = "center",
-        labelColor = { default = { 0.62, 0.07, 0.04 }},
+        labelColor = { default = { 0, 0.6, 0 } }, --{ default = { 0.62, 0.07, 0.04 }},
         labelXOffset = 8,
         labelYOffset = -7,
         font = "Erbos Draco 1st Open NBP",
         fontSize = 40,
         onEvent = toggleDebug,
-        emboss = true,
+        emboss = false,
         shape = "roundedRect",
         width = 50,
         height = 50,
         cornerRadius = 5,
         fillColor = {
-            default = { 0.6, 0.6, 0.6 },
+            default = { 0.6, 0.6, 0.6, 0.5 },
             over = { 0.4, 0.4, 0.4 },
         },
     } )
@@ -65,10 +65,10 @@ function start()
     initGUI()
     hilite:init()
  
-    ship:init()
+    -- ship:init()
 
-    local scale = math.random()
-    ship:setScale( scale )
+    -- local scale = math.random()
+    -- ship:setScale( scale )
     -- Star.setScale( scale )
 end
 
@@ -76,15 +76,15 @@ function processTap(event)
     if event.phase == "ended" then
         print("Tapped: ", event.x, ", ", event.y)
         local soi = display.newCircle(event.x, event.y, 30)
-        timer.performWithDelay( 50, function () soi:removeSelf() end )
-        physics.addBody( soi, "dynamic")
+        timer.performWithDelay( 1, function () soi:removeSelf() end )
+        physics.addBody( soi, "dynamic", { filter = {categoryBits = 2, maskBits = 1 } } )
         soi:addEventListener( "collision", tapCollision )
     end
 end
 
 function tapCollision(collision) 
     -- print("Collision from: ", collision.target.x, collision.target.y)
-    -- print("Collision with: ", collision.other.x, collision.other.y)
+    print("Collision with: ", ("[name: %s, x: %d, y: %d]"):format(collision.other.name or "Unknown", collision.other.x, collision.other.y))
     hilite:highlight(collision.other, collision.target.x, collision.target.y)
 end
 
@@ -109,7 +109,6 @@ local function main()
     timer.performWithDelay( 1000, function() display.remove( helloWordText ); start() end )
 
     Runtime:addEventListener( "touch", processTap )
-
 end
 
 main()
