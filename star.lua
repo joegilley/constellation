@@ -7,10 +7,6 @@ local StarModule = {}
 
 local starDisplayGroup = display.newGroup()
 
-function StarModule.setScale( scale ) 
-    starDisplayGroup:scale( scale, scale )
-end
-
 -- public methods
 function StarModule.new ( vals )
     local star = Proxy.get(display.newRect(starDisplayGroup, vals.x or -10, vals.y or -10, vals.size or 1, vals.size or 1))
