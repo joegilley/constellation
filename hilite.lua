@@ -84,6 +84,9 @@ function hilite:highlight(star, referenceX, referenceY)
 
         hlGroup.isFixedRotation = true
 
+        hlGroup:addEventListener( "tap", function() print("Tapped " .. star.name); return true end )
+        hlGroup:addEventListener( "touch", function () return true end )
+
         hlInfo.resetTimer = timer.performWithDelay( 5000, function() self:reset(star) end)
     end
 
