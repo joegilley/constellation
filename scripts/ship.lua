@@ -1,5 +1,5 @@
-local proxy = require "proxy"
 local physics = require "physics"
+local proxy = require "scripts.proxy"
 
 -- declare my ship object
 local ship = proxy.get ( display.newContainer( 300, 300 ) )

@@ -1,6 +1,6 @@
 local json = require("json")
 local physics = require("physics")
-local utility = require("utility")
+local utility = require("scripts.utility")
 
 -- Create the hilite object that will be returned
 local hilite = {}

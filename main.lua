@@ -11,11 +11,11 @@ physics.setGravity( 0, 0 )
 local json = require("json")
 local widget = require("widget")
 
-local Star = require("star")
-local hilite = require("hilite")
+local Star = require("scripts.star")
+local hilite = require("scripts.hilite")
 
 -- my ship pooper
-local ship = require("ship")
+local ship = require("scripts.ship")
 
 
 display.setStatusBar( display.HiddenStatusBar )

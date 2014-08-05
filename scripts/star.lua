@@ -1,9 +1,9 @@
-local Proxy = require('proxy')
 local json = require('json')
+local Proxy = require('scripts.proxy')
 
 local StarModule = {}
 
-local STAR_STANDARD_SIZE = 5
+local STAR_STANDARD_SIZE = 2
 local STAR_CATEGORY_BIT = 1
 local STAR_COLLIDE_BITS = 2
 
