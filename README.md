@@ -1,4 +1,3 @@
-corona_test
+constellation
 ===========
-
-spastic readme for testies yo.
+A 2D game concept in LUA using the Corona framework.
